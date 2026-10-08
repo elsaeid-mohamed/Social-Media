@@ -1,12 +1,16 @@
-import { NextFunction, Request, Response } from "express";
+import { ILogin } from "./dto/auth.dto";
 
 class AuthService {
   constructor() {}
 
-  async login(req: Request, res: Response, next: NextFunction) {
-    // مؤقتاً: بيرجع بيانات تجريبية
-    return { message: "user login" };
+  login(data: ILogin) {
+    const { email, password } = data;
+    console.log("user login");
+
+    return { email, password };
   }
 }
 
-export default new AuthService();
+const authService = new AuthService();
+
+export default authService;

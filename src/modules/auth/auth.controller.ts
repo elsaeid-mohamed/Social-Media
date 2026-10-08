@@ -12,11 +12,15 @@ authRouter.post(
     const result = loginSchema.safeParse(req.body);
     if (!result.success) {
       throw new BadRequestException("validation error", {
-        error: JSON.parse(result.error as any),
+        error: result.error.issues,
       });
     }
-    const user = await authService.login(req, res, next);
-    return successResponse({ res, message: "login successfully", data: user });
+    const data = authService.login(result.data);
+    return successResponse({
+      res,
+      message: "login successfully",
+      data,
+    });
   },
 );
 
